@@ -10,10 +10,12 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import com.sw.placeholder.comments.list.ListScreenUIState.Success
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.stateIn
 
 @HiltViewModel
-class CommentListViewModel @Inject constructor(private val getCommentsUseCase: GetCommentsUseCase):ViewModel() {
+class CommentListViewModel @Inject constructor(private val getCommentsUseCase: GetCommentsUseCase) :
+    ViewModel() {
 
     val listScreenUiState: StateFlow<ListScreenUIState> = getCommentsUseCase()
         .map<List<PlaceHolderResponseItem>, ListScreenUIState> { items ->
@@ -25,7 +27,10 @@ class CommentListViewModel @Inject constructor(private val getCommentsUseCase: G
                 )
             }.let(::Success)
 
-    }.stateIn(
+        }.catch { throwable ->
+            emit(ListScreenUIState.Error(throwable.message ?: "Unknown error"))
+        }
+        .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000),
             ListScreenUIState.Loading

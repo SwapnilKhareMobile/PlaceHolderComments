@@ -6,6 +6,6 @@ import javax.inject.Inject
 
 class CommentsRemoteDataSourceImpl @Inject constructor(private val commentsAPI: CommentsAPI):CommentsRemoteDataSource {
     override suspend fun getComments(): List<PlaceHolderResponseItem> {
-        return commentsAPI.getCommentsAPI().body()?.placeHolderResponse?: emptyList()
+        return commentsAPI.getCommentsAPI().body()?: emptyList()
     }
 }
