@@ -42,7 +42,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)
-
+    implementation(libs.retrofit2.retrofit)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 

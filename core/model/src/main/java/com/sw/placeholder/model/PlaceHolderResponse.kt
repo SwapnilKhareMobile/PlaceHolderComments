@@ -1,3 +1,5 @@
 package com.sw.placeholder.model
 
-class PlaceHolderResponse : ArrayList<PlaceHolderResponseItem>()
+data class PlaceHolderResponse(
+    val placeHolderResponse: List<PlaceHolderResponseItem>
+)
