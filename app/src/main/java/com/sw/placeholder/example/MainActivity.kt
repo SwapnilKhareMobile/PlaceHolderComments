@@ -5,36 +5,41 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
+import com.sw.placeholder.common.MyAppTopBar
 import com.sw.placeholder.example.ui.navigation.MainNavigation
 import com.sw.placeholder.example.ui.theme.PlaceHolderCommentsExampleTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    lateinit var navController: NavHostController
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            PlaceHolderCommentsExampleTheme {
-                Scaffold(
-                    modifier = Modifier.fillMaxSize(),
-                ) {
-                    navController = rememberNavController()
-                    MainNavigation(
-                        modifier = Modifier.padding(1.dp),
-                        navController,
+            PlaceHolderCommentsExampleTheme() {
+                Scaffold(topBar = {
+                    MyAppTopBar(
+                        title = "List",
+                        onClick = {},
+                        isBackNavigation = false
                     )
+                }) { innerPadding ->
+                    Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                        Box(modifier = Modifier.padding(innerPadding)) {
+                            MainNavigation()
+                        }
+                    }
                 }
+
             }
         }
     }

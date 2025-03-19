@@ -22,7 +22,6 @@ class GetCommentsUseCaseImpl @Inject constructor(private val commentsRepository:
         return allItems.map { items ->
             items.firstOrNull { model -> model.id == id }
                 ?: throw NoSuchElementException("$id not found")
-
         }
     }
 }
