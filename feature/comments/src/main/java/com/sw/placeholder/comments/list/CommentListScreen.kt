@@ -16,11 +16,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sw.placeholder.comments.list.CommentListViewModel
 import com.sw.placeholder.comments.list.ListModelUIState
 import com.sw.placeholder.comments.list.ListScreenUIState
+import com.sw.placeholder.model.PlaceHolderResponseItem
 
 @Composable
 fun CommentListScreen(
     modifier: Modifier = Modifier,
-    onClick: (Int) -> Unit,
+    onClick: (PlaceHolderResponseItem) -> Unit,
     viewModel: CommentListViewModel = hiltViewModel()
 ) {
     val uiState = viewModel.listScreenUiState.collectAsStateWithLifecycle()
@@ -41,14 +42,30 @@ fun CommentListScreen(
 }
 
 @Composable
-fun CommentsListItem(modifier: Modifier, list: List<ListModelUIState>, onClick: (Int) -> Unit) {
+fun CommentsListItem(
+    modifier: Modifier,
+    list: List<ListModelUIState>,
+    onClick: (PlaceHolderResponseItem) -> Unit
+) {
     for (item in list) {
         Card(
-            modifier = modifier.padding(16.dp).clickable { onClick(item.id) },
+            modifier = modifier
+                .padding(16.dp)
+                .clickable {
+                    onClick(
+                        PlaceHolderResponseItem(
+                            body = item.body,
+                            email = item.email,
+                            id = item.id,
+                            name = item.name,
+                            postId = 0
+                        )
+                    )
+                },
             colors = CardDefaults.cardColors(containerColor = Color.White)
         ) {
             Column(modifier = Modifier.padding(10.dp)) {
-                Text(text = "Title: $item.name", fontSize = 24.sp)
+                Text(text = item.name, fontSize = 24.sp)
                 Text(text = item.body)
             }
 

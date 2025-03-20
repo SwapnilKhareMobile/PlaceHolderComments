@@ -13,12 +13,5 @@ fun CommentDetailScreen(
     viewModel: CommentDetailViewModel = hiltViewModel()
 ) {
     val detailUIState = viewModel.detailsUIState.collectAsStateWithLifecycle()
-
-    when(detailUIState.value){
-        DetailScreenUIState.Loading -> {}
-        is DetailScreenUIState.Success -> {
-            val comments = (detailUIState.value as DetailScreenUIState.Success).comments
-            Text(text = comments.title)
-        }
-    }
+    detailUIState.value?.let { Text(text = it.name) }
 }
