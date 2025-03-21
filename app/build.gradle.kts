@@ -45,6 +45,7 @@ dependencies {
 
     implementation(project(":feature:comments"))
     implementation(project(":core:common"))
+    implementation(project(":core:model"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
