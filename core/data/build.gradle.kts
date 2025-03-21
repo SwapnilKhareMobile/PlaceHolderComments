@@ -45,5 +45,6 @@ dependencies {
     implementation(libs.retrofit2.retrofit)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+    testImplementation(libs.mockk)
 
 }
